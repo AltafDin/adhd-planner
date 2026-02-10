@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADHD Momentum Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="kicker">Built for mobile & tablet</p>
+        <h1>ADHD Momentum Planner</h1>
+      </div>
+      <button class="ghost-btn" id="resetPlanner">Reset Day</button>
+    </header>
+
+    <nav class="tab-nav" aria-label="Planner sections">
+      <button class="tab-btn active" data-tab="routine">Routine</button>
+      <button class="tab-btn" data-tab="focus">Focus</button>
+      <button class="tab-btn" data-tab="tasks">Tasks</button>
+      <button class="tab-btn" data-tab="blocks">Time Blocks</button>
+      <button class="tab-btn" data-tab="reflection">Reflection</button>
+      <button class="tab-btn" data-tab="customize">Customize</button>
+    </nav>
+
+    <main>
+      <section class="panel active" id="routine">
+        <h2>Daily Routine Tracker</h2>
+        <p class="section-intro">
+          Plan your energy, define priorities, and keep your day clear.
+        </p>
+
+        <div class="card-grid two-up">
+          <article class="card">
+            <h3>Top 3 Priorities</h3>
+            <ul class="checklist" id="priorityList">
+              <li><input type="checkbox" /><input type="text" placeholder="Priority 1" /></li>
+              <li><input type="checkbox" /><input type="text" placeholder="Priority 2" /></li>
+              <li><input type="checkbox" /><input type="text" placeholder="Priority 3" /></li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Morning • Midday • Evening</h3>
+            <label>Morning anchor task
+              <input type="text" placeholder="e.g., 10 min movement" data-save="morningTask" />
+            </label>
+            <label>Midday check-in
+              <input type="text" placeholder="e.g., hydration + stretch" data-save="middayTask" />
+            </label>
+            <label>Evening wind-down
+              <input type="text" placeholder="e.g., prepare tomorrow's top task" data-save="eveningTask" />
+            </label>
+          </article>
+        </div>
+
+        <article class="card">
+          <h3>Time Awareness</h3>
+          <div class="card-grid three-up">
+            <label>
+              Wake-up time
+              <input type="time" data-save="wakeTime" />
+            </label>
+            <label>
+              Peak focus window
+              <input type="text" placeholder="e.g., 9:00-11:00" data-save="focusWindow" />
+            </label>
+            <label>
+              Bedtime target
+              <input type="time" data-save="bedTime" />
+            </label>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel" id="focus">
+        <h2>Focus & Mindfulness</h2>
+        <p class="section-intro">Use micro-practices to reset attention and reduce stress.</p>
+
+        <div class="card-grid two-up">
+          <article class="card">
+            <h3>Breathing Technique</h3>
+            <p>Try the 4-4-6 pattern: inhale 4s, hold 4s, exhale 6s.</p>
+            <div class="timer-row">
+              <input type="number" min="1" value="3" id="breathMinutes" />
+              <span>minute session</span>
+              <button class="solid-btn" id="startBreath">Start</button>
+            </div>
+            <p class="timer-readout" id="breathReadout">Ready to begin.</p>
+          </article>
+
+          <article class="card">
+            <h3>Focus Boosters</h3>
+            <ul class="pill-list">
+              <li>🎧 Binaural/lo-fi audio</li>
+              <li>📵 Phone in another room</li>
+              <li>💧 Water + quick protein snack</li>
+              <li>🧹 2-minute desk reset</li>
+            </ul>
+            <label>
+              What helps you most?
+              <textarea rows="3" placeholder="Write your go-to booster" data-save="focusBooster"></textarea>
+            </label>
+          </article>
+        </div>
+
+        <article class="card">
+          <h3>Grounding Reset (5-4-3-2-1)</h3>
+          <p>List one item for each sense to reconnect with the present.</p>
+          <div class="card-grid five-up">
+            <label>5 things you can see<input type="text" data-save="senseSee" /></label>
+            <label>4 things you can feel<input type="text" data-save="senseFeel" /></label>
+            <label>3 things you can hear<input type="text" data-save="senseHear" /></label>
+            <label>2 things you can smell<input type="text" data-save="senseSmell" /></label>
+            <label>1 thing you can taste<input type="text" data-save="senseTaste" /></label>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel" id="tasks">
+        <h2>Task Management</h2>
+        <p class="section-intro">Capture tasks quickly, then prioritize by impact and effort.</p>
+
+        <article class="card">
+          <h3>Add Task</h3>
+          <form id="taskForm" class="task-form">
+            <input type="text" id="taskText" required placeholder="What needs to get done?" />
+            <select id="taskPriority">
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+            </select>
+            <select id="taskCategory">
+              <option value="work">Work</option>
+              <option value="home">Home</option>
+              <option value="health">Health</option>
+              <option value="admin">Admin</option>
+              <option value="other">Other</option>
+            </select>
+            <button class="solid-btn" type="submit">Add</button>
+          </form>
+          <ul id="taskList" class="task-list"></ul>
+        </article>
+      </section>
+
+      <section class="panel" id="blocks">
+        <h2>Time-Blocking Templates</h2>
+        <p class="section-intro">Allocate focused work, admin tasks, and breaks with intention.</p>
+
+        <article class="card">
+          <h3>Today’s Schedule</h3>
+          <div class="block-grid" id="blockGrid"></div>
+        </article>
+
+        <article class="card">
+          <h3>Suggested ADHD-Friendly Pattern</h3>
+          <ul class="pill-list">
+            <li>25 min focus sprint</li>
+            <li>5 min movement break</li>
+            <li>Repeat x3, then 20 min reset</li>
+            <li>Use visual timer + short transition ritual</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="panel" id="reflection">
+        <h2>Reflection & Journaling</h2>
+        <p class="section-intro">Celebrate wins, review challenges, and define tomorrow’s next step.</p>
+
+        <div class="card-grid two-up">
+          <article class="card">
+            <h3>Daily Reflection</h3>
+            <label>What went well today?
+              <textarea rows="4" data-save="wins"></textarea>
+            </label>
+            <label>What felt difficult?
+              <textarea rows="4" data-save="challenges"></textarea>
+            </label>
+          </article>
+
+          <article class="card">
+            <h3>Growth & Intentions</h3>
+            <label>One thing I learned about myself
+              <textarea rows="3" data-save="learning"></textarea>
+            </label>
+            <label>Tomorrow’s first small win
+              <textarea rows="3" data-save="tomorrowWin"></textarea>
+            </label>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="customize">
+        <h2>Customizable Layout</h2>
+        <p class="section-intro">Personalize the planner to match your focus style.</p>
+
+        <article class="card settings">
+          <label>
+            Theme
+            <select id="themePicker">
+              <option value="sunrise">Sunrise (default)</option>
+              <option value="forest">Forest</option>
+              <option value="midnight">Midnight</option>
+            </select>
+          </label>
+
+          <label>
+            Typography
+            <select id="fontPicker">
+              <option value="inter">Inter</option>
+              <option value="lexend">Lexend</option>
+            </select>
+          </label>
+
+          <label class="inline-control">
+            <input type="checkbox" id="compactMode" />
+            Enable compact card spacing
+          </label>
+        </article>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
